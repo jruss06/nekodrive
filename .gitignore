@@ -3,3 +3,6 @@
 ################################################################################
 
 /NFSLibrary/obj
+/DokanNet/obj
+/jportmap/obj
+/jrpcgen/obj

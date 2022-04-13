@@ -303,7 +303,7 @@ namespace org.acplt.oncrpc
 			if ((port == 0) && (protocol != org.acplt.oncrpc.OncRpcProtocols.ONCRPC_HTTP))
 			{
 				org.acplt.oncrpc.OncRpcPortmapClient portmap = new org.acplt.oncrpc.OncRpcPortmapClient
-					(host);
+					(host, protocol);
 				try
 				{
 					port = portmap.getPort(program, version, protocol);
