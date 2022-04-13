@@ -24,11 +24,14 @@ namespace NFSClientExample
 
                 client.MountDevice(export);
 
-                var children = client.GetItemList(".");
+                var children = client.GetDirectoryItems(".");
 
                 foreach (var child in children)
                 {
+                    var attrib = client.GetItemAttributes(child);
+
                     Console.WriteLine(child);
+                    Console.WriteLine(attrib.Mode.UserAccess);
                 }
             }
 

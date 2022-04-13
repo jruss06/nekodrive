@@ -230,9 +230,9 @@ namespace NFSLibrary
         /// </summary>
         /// <param name="DirectoryFullName">Directory name (e.g. "directory\subdirectory" or "." for the root)</param>
         /// <returns>A list of the items name</returns>
-        public List<String> GetItemList(String DirectoryFullName)
+        public List<string> GetDirectoryItems(string DirectoryFullName)
         {
-            return GetItemList(DirectoryFullName, false);
+            return GetDirectoryItems(DirectoryFullName, false);
         }
 
         /// <summary>
@@ -241,11 +241,11 @@ namespace NFSLibrary
         /// <param name="DirectoryFullName">Directory name (e.g. "directory\subdirectory" or "." for the root)</param>
         /// <param name="ExcludeNavigationDots">When posted as true, return list will not contains "." and ".."</param>
         /// <returns>A list of the items name</returns>
-        public List<String> GetItemList(String DirectoryFullName, Boolean ExcludeNavigationDots)
+        public List<string> GetDirectoryItems(string DirectoryFullName, bool ExcludeNavigationDots)
         {
             DirectoryFullName = CorrectPath(DirectoryFullName);
 
-            System.Collections.Generic.List<String> content = this._nfsInterface.GetItemList(DirectoryFullName);
+            System.Collections.Generic.List<string> content = this._nfsInterface.GetItemList(DirectoryFullName);
 
             if (ExcludeNavigationDots)
             {
@@ -268,7 +268,7 @@ namespace NFSLibrary
         /// </summary>
         /// <param name="ItemFullName">The item full path name</param>
         /// <returns>A NFSAttributes class</returns>
-        public NFSAttributes GetItemAttributes(String ItemFullName, bool ThrowExceptionIfNotFoud = true)
+        public NFSAttributes GetItemAttributes(string ItemFullName, bool ThrowExceptionIfNotFoud = true)
         {
             ItemFullName = CorrectPath(ItemFullName);
 
@@ -309,7 +309,7 @@ namespace NFSLibrary
         /// Delete a directory
         /// </summary>
         /// <param name="DirectoryFullName">Directory full name</param>
-        public void DeleteDirectory(String DirectoryFullName)
+        public void DeleteDirectory(string DirectoryFullName)
         {
             DeleteDirectory(DirectoryFullName, false);
         }
@@ -318,18 +318,18 @@ namespace NFSLibrary
         /// Delete a directory
         /// </summary>
         /// <param name="DirectoryFullName">Directory full name</param>
-        public void DeleteDirectory(String DirectoryFullName, bool recursive)
+        public void DeleteDirectory(string DirectoryFullName, bool recursive)
         {
             DirectoryFullName = CorrectPath(DirectoryFullName);
 
             if (recursive)
             {
-                foreach (String item in GetItemList(DirectoryFullName, true))
+                foreach (string item in GetDirectoryItems(DirectoryFullName, true))
                 {
-                    if (IsDirectory(String.Format("{0}\\{1}", DirectoryFullName, item)))
-                    { DeleteDirectory(String.Format("{0}\\{1}", DirectoryFullName, item), recursive); }
+                    if (IsDirectory(string.Format("{0}\\{1}", DirectoryFullName, item)))
+                    { DeleteDirectory(string.Format("{0}\\{1}", DirectoryFullName, item), recursive); }
                     else
-                    { DeleteFile(String.Format("{0}\\{1}", DirectoryFullName, item)); }
+                    { DeleteFile(string.Format("{0}\\{1}", DirectoryFullName, item)); }
                 }
             }
 
