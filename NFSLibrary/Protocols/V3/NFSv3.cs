@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using NFSLibrary.Protocols.Commons;
+﻿using NFSLibrary.Protocols.Commons;
 using NFSLibrary.Protocols.Commons.Exceptions;
 using NFSLibrary.Protocols.Commons.Exceptions.Mount;
 using NFSLibrary.Protocols.V3.RPC;
 using NFSLibrary.Protocols.V3.RPC.Mount;
 using org.acplt.oncrpc;
+using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace NFSLibrary.Protocols.V3
 {
@@ -29,9 +28,20 @@ namespace NFSLibrary.Protocols.V3
 
         #endregion
 
-        #region Constructur
+        #region Constructor
 
-        public void Connect(IPAddress Address, int UserID, int GroupID, int ClientTimeout, System.Text.Encoding characterEncoding, bool useSecurePort)
+        public NFSv3()
+        {
+            _RootDirectoryHandleObject = null;
+            _CurrentItemHandleObject = null;
+
+            _MountedDevice = String.Empty;
+            _CurrentItem = String.Empty;
+        }
+
+        #endregion
+
+        public void Connect(IPAddress Address, int UserID, int GroupID, int ClientTimeout, System.Text.Encoding characterEncoding, bool useSecurePort, int protocol)
         {
             if (ClientTimeout == 0)
             { ClientTimeout = 60000; }
@@ -39,17 +49,11 @@ namespace NFSLibrary.Protocols.V3
             if (characterEncoding == null)
             { characterEncoding = System.Text.Encoding.ASCII; }
 
-            _RootDirectoryHandleObject = null;
-            _CurrentItemHandleObject = null;
-
-            _MountedDevice = String.Empty;
-            _CurrentItem = String.Empty;
-
             _GroupID = GroupID;
             _UserID = UserID;
 
-            _MountProtocolV3 = new NFSv3MountProtocolClient(Address, OncRpcProtocols.ONCRPC_UDP, useSecurePort);
-            _ProtocolV3 = new NFSv3ProtocolClient(Address, OncRpcProtocols.ONCRPC_UDP, useSecurePort);
+            _MountProtocolV3 = new NFSv3MountProtocolClient(Address, protocol, useSecurePort);
+            _ProtocolV3 = new NFSv3ProtocolClient(Address, protocol, useSecurePort);
 
             OncRpcClientAuthUnix authUnix = new OncRpcClientAuthUnix(Address.ToString(), UserID, GroupID);
 
@@ -61,8 +65,6 @@ namespace NFSLibrary.Protocols.V3
             _ProtocolV3.GetClient().setTimeout(ClientTimeout);
             _ProtocolV3.GetClient().setCharacterEncoding(characterEncoding.WebName);
         }
-
-        #endregion
 
         #region Public Methods
 
@@ -81,7 +83,7 @@ namespace NFSLibrary.Protocols.V3
                 _ProtocolV3.close();
         }
 
-        public List<String> GetExportedDevices()
+        public List<string> GetExportedDevices()
         {
             if (_MountProtocolV3 == null)
             { throw new NFSMountConnectionException("NFS Device not connected!"); }
@@ -101,7 +103,7 @@ namespace NFSLibrary.Protocols.V3
             return nfsDevices;
         }
 
-        public void MountDevice(String DeviceName)
+        public void MountDevice(string DeviceName)
         {
             if (_ProtocolV3 == null)
             { throw new NFSConnectionException("NFS Client not connected!"); }

@@ -44,7 +44,7 @@ namespace NFSLibrary.Protocols.V2
 
         #region Methods
 
-        public void Connect(IPAddress Address, int UserID, int GroupID, int ClientTimeout, System.Text.Encoding characterEncoding, bool useSecurePort)
+        public void Connect(IPAddress Address, int UserID, int GroupID, int ClientTimeout, System.Text.Encoding characterEncoding, bool useSecurePort, int protocol)
         {
             if (ClientTimeout == 0)
             { ClientTimeout = 60000; }
@@ -61,8 +61,8 @@ namespace NFSLibrary.Protocols.V2
             _GroupID = GroupID;
             _UserID = UserID;
 
-            _MountProtocolV2 = new NFSv2MountProtocolClient(Address, OncRpcProtocols.ONCRPC_UDP, useSecurePort);
-            _ProtocolV2 = new NFSv2ProtocolClient(Address, OncRpcProtocols.ONCRPC_UDP, useSecurePort);
+            _MountProtocolV2 = new NFSv2MountProtocolClient(Address, protocol, useSecurePort);
+            _ProtocolV2 = new NFSv2ProtocolClient(Address, protocol, useSecurePort);
 
             OncRpcClientAuthUnix authUnix = new OncRpcClientAuthUnix(System.Environment.MachineName, UserID, GroupID);
 
