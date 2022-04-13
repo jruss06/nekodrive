@@ -19,7 +19,7 @@ namespace NFSLibrary.Protocols.Commons
 
         List<String> GetItemList(String DirectoryFullName);
 
-        NFSAttributes GetItemAttributes(String ItemFullName, bool ThrowExceptionIfNotFound);
+        NFSAttributes GetItemAttributes(String ItemFullName);
 
         void CreateDirectory(String DirectoryFullName, NFSPermission Mode);
 

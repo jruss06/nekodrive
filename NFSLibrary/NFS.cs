@@ -268,11 +268,11 @@ namespace NFSLibrary
         /// </summary>
         /// <param name="ItemFullName">The item full path name</param>
         /// <returns>A NFSAttributes class</returns>
-        public NFSAttributes GetItemAttributes(string ItemFullName, bool ThrowExceptionIfNotFoud = true)
+        public NFSAttributes GetItemAttributes(string ItemFullName)
         {
             ItemFullName = CorrectPath(ItemFullName);
 
-            return this._nfsInterface.GetItemAttributes(ItemFullName, ThrowExceptionIfNotFoud);
+            return this._nfsInterface.GetItemAttributes(ItemFullName);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace NFSLibrary
 
                 if (!FileExists(SourceFileFullName))
                     throw new System.IO.FileNotFoundException();
-                NFSAttributes nfsAttributes = GetItemAttributes(SourceFileFullName, true);
+                NFSAttributes nfsAttributes = GetItemAttributes(SourceFileFullName);
                 long TotalRead = nfsAttributes.Size, ReadOffset = 0;
 
                 Byte[] ChunkBuffer = (Byte[])Array.CreateInstance(typeof(Byte), this._blockSize);
@@ -734,7 +734,7 @@ namespace NFSLibrary
         {
             FileFullName = CorrectPath(FileFullName);
 
-            return (GetItemAttributes(FileFullName, false) != null);
+            return (GetItemAttributes(FileFullName) != null);
         }
 
         /// <summary>

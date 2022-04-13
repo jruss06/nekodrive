@@ -195,7 +195,7 @@ namespace NFSLibrary.Protocols.V3
             return ItemsList;
         }
 
-        public NFSAttributes GetItemAttributes(string ItemFullName, bool ThrowExceptionIfNotFound = true)
+        public NFSAttributes GetItemAttributes(string ItemFullName)
         {
             if (_ProtocolV3 == null)
             { throw new NFSConnectionException("NFS Client not connected!"); }
@@ -239,11 +239,7 @@ namespace NFSLibrary.Protocols.V3
                 }
                 else
                 {
-                    if (pDirOpRes == null || pDirOpRes.Status == NFSStats.NFSERR_NOENT)
-                    { attributes = null; break; }
-
-                    if(ThrowExceptionIfNotFound)
-                        ExceptionHelpers.ThrowException(pDirOpRes.Status);
+                    ExceptionHelpers.ThrowException(pDirOpRes.Status);
                 }
             }
 

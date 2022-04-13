@@ -208,7 +208,7 @@ namespace NFSLibrary.Protocols.V2
             return ItemsList;
         }
 
-        public NFSAttributes GetItemAttributes(String ItemFullName, bool ThrowExceptionIfNotFound = true)
+        public NFSAttributes GetItemAttributes(String ItemFullName)
         {
             if (_ProtocolV2 == null)
             { 
@@ -256,14 +256,7 @@ namespace NFSLibrary.Protocols.V2
                 }
                 else
                 {
-                    if (pDirOpRes == null || pDirOpRes.Status == NFSStats.NFSERR_NOENT)
-                    { 
-                        attributes = null; 
-                        break; 
-                    }
-
-                    if(ThrowExceptionIfNotFound)
-                        ExceptionHelpers.ThrowException(pDirOpRes.Status);
+                    ExceptionHelpers.ThrowException(pDirOpRes.Status);
                 }
             }
 
