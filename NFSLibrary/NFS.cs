@@ -245,19 +245,12 @@ namespace NFSLibrary
         {
             DirectoryFullName = CorrectPath(DirectoryFullName);
 
-            System.Collections.Generic.List<string> content = this._nfsInterface.GetItemList(DirectoryFullName);
+            List<string> content = this._nfsInterface.GetItemList(DirectoryFullName);
 
             if (ExcludeNavigationDots)
             {
-                int dotIdx, ddotIdx;
-
-                dotIdx = content.IndexOf(".");
-                if (dotIdx > -1)
-                    content.RemoveAt(dotIdx);
-
-                ddotIdx = content.IndexOf("..");
-                if (ddotIdx > -1)
-                    content.RemoveAt(ddotIdx);
+                content.Remove(".");
+                content.Remove("..");
             }
 
             return content;
