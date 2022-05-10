@@ -17,6 +17,8 @@ namespace NFSLibrary.Protocols.Commons
         private NFSPermission _mode;
         private long _size;
         private Byte[] _handle;
+        public int Uid { get; set; }
+        public int Gid { get; set; }
 
         public NFSAttributes(int cdateTime, int adateTime, int mdateTime, NFSItemTypes type, NFSPermission mode, long size, Byte[] handle)
         {

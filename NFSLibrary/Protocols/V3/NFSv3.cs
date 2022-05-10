@@ -235,6 +235,9 @@ namespace NFSLibrary.Protocols.V3
                                         pDirOpRes.OK.ItemAttributes.Attributes.Mode,
                                         pDirOpRes.OK.ItemAttributes.Attributes.Size,
                                         pDirOpRes.OK.ItemHandle.Value);
+
+                        attributes.Uid = pDirOpRes.OK.ItemAttributes.Attributes.UserID;
+                        attributes.Gid = pDirOpRes.OK.ItemAttributes.Attributes.GroupID;
                     }
                 }
                 else
