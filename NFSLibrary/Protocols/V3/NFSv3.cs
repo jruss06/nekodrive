@@ -6,6 +6,7 @@ using NFSLibrary.Protocols.V3.RPC.Mount;
 using org.acplt.oncrpc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace NFSLibrary.Protocols.V3
@@ -209,13 +210,13 @@ namespace NFSLibrary.Protocols.V3
                 ItemFullName = ".";
 
             NFSHandle currentItem = _RootDirectoryHandleObject;
-            String[] PathTree = ItemFullName.Split(@"\".ToCharArray());
+            string[] PathTree = ItemFullName.Split('\\');
 
-            for (int pC = 0; pC < PathTree.Length; pC++)
+            foreach (var pathPart in PathTree)
             {
                 ItemOperationArguments dpDrArgs = new ItemOperationArguments();
                 dpDrArgs.Directory = currentItem;
-                dpDrArgs.Name = new Name(PathTree[pC]);
+                dpDrArgs.Name = new Name(pathPart);
 
                 ResultObject<ItemOperationAccessResultOK, ItemOperationAccessResultFAIL> pDirOpRes =
                     _ProtocolV3.NFSPROC3_LOOKUP(dpDrArgs);
@@ -225,7 +226,7 @@ namespace NFSLibrary.Protocols.V3
                 {
                     currentItem = pDirOpRes.OK.ItemHandle;
 
-                    if (PathTree.Length - 1 == pC)
+                    if (pathPart == PathTree.Last())
                     {
                         attributes = new NFSAttributes(
                                         pDirOpRes.OK.ItemAttributes.Attributes.CreateTime.Seconds,
