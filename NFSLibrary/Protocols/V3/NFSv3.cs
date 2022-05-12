@@ -198,6 +198,40 @@ namespace NFSLibrary.Protocols.V3
             return ItemsList;
         }
 
+        public NFSAttributes Lookup(string itemName, byte[] nFSHandle)
+        {
+            ItemOperationArguments dpDrArgs = new ItemOperationArguments();
+            dpDrArgs.Directory = new NFSHandle(nFSHandle, V3.RPC.NFSv3Protocol.NFS_V3);
+            dpDrArgs.Name = new Name(itemName);
+
+            ResultObject<ItemOperationAccessResultOK, ItemOperationAccessResultFAIL> pDirOpRes =
+                _ProtocolV3.NFSPROC3_LOOKUP(dpDrArgs);
+
+            NFSAttributes attributes = null;
+
+            if (pDirOpRes != null &&
+                pDirOpRes.Status == NFSStats.NFS_OK)
+            {
+                attributes = new NFSAttributes(
+                                pDirOpRes.OK.ItemAttributes.Attributes.CreateTime.Seconds,
+                                pDirOpRes.OK.ItemAttributes.Attributes.LastAccessedTime.Seconds,
+                                pDirOpRes.OK.ItemAttributes.Attributes.ModifiedTime.Seconds,
+                                pDirOpRes.OK.ItemAttributes.Attributes.Type,
+                                pDirOpRes.OK.ItemAttributes.Attributes.Mode,
+                                pDirOpRes.OK.ItemAttributes.Attributes.Size,
+                                pDirOpRes.OK.ItemHandle.Value);
+
+                attributes.Uid = pDirOpRes.OK.ItemAttributes.Attributes.UserID;
+                attributes.Gid = pDirOpRes.OK.ItemAttributes.Attributes.GroupID;
+            }
+            else
+            {
+                ExceptionHelpers.ThrowException(pDirOpRes.Status);
+            }
+
+            return attributes;
+        }
+
         public NFSAttributes GetItemAttributes(string ItemFullName)
         {
             if (_ProtocolV3 == null)

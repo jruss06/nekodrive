@@ -21,6 +21,8 @@ namespace NFSLibrary.Protocols.Commons
 
         NFSAttributes GetItemAttributes(String ItemFullName);
 
+        NFSAttributes Lookup(string itemName, byte[] nFSHandle);
+
         void CreateDirectory(String DirectoryFullName, NFSPermission Mode);
 
         void DeleteDirectory(String DirectoryFullName);

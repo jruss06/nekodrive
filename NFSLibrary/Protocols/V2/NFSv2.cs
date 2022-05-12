@@ -210,6 +210,11 @@ namespace NFSLibrary.Protocols.V2
             return ItemsList;
         }
 
+        public NFSAttributes Lookup(string itemName, byte[] nFSHandle)
+        {
+            throw new NotImplementedException();
+        }
+
         public NFSAttributes GetItemAttributes(String ItemFullName)
         {
             if (_ProtocolV2 == null)

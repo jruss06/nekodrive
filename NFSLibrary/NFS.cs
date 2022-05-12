@@ -268,6 +268,11 @@ namespace NFSLibrary
             return this._nfsInterface.GetItemAttributes(ItemFullName);
         }
 
+        public NFSAttributes Lookup(string itemName, byte[] nFSHandle)
+        {
+            return this._nfsInterface.Lookup(itemName, nFSHandle);
+        }
+
         /// <summary>
         /// Create a new directory
         /// </summary>
