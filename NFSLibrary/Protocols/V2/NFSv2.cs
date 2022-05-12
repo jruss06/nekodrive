@@ -145,7 +145,7 @@ namespace NFSLibrary.Protocols.V2
             }
         }
 
-        public List<String> GetItemList(String DirectoryFullName)
+        public List<String> GetItemList(String DirectoryFullName, NFSAttributes itemAttributes = null)
         {
             if (_ProtocolV2 == null)
             { 
@@ -159,8 +159,10 @@ namespace NFSLibrary.Protocols.V2
 
             List<string> ItemsList = new List<string>();
 
-            NFSAttributes itemAttributes =
-                GetItemAttributes(DirectoryFullName);
+            if (itemAttributes == null)
+            {
+                itemAttributes = GetItemAttributes(DirectoryFullName);
+            }
 
             if (itemAttributes != null)
             {

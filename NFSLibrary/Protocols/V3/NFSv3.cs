@@ -138,7 +138,7 @@ namespace NFSLibrary.Protocols.V3
             }
         }
 
-        public List<String> GetItemList(String DirectoryFullName)
+        public List<String> GetItemList(String DirectoryFullName, NFSAttributes itemAttributes = null)
         {
             if (_ProtocolV3 == null)
             { throw new NFSConnectionException("NFS Client not connected!"); }
@@ -148,8 +148,10 @@ namespace NFSLibrary.Protocols.V3
 
             List<string> ItemsList = new List<string>();
 
-            NFSAttributes itemAttributes =
-                GetItemAttributes(DirectoryFullName);
+            if (itemAttributes == null)
+            {
+                itemAttributes = GetItemAttributes(DirectoryFullName);
+            }
 
             if (itemAttributes != null)
             {

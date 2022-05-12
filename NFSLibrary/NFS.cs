@@ -241,11 +241,11 @@ namespace NFSLibrary
         /// <param name="DirectoryFullName">Directory name (e.g. "directory\subdirectory" or "." for the root)</param>
         /// <param name="ExcludeNavigationDots">When posted as true, return list will not contains "." and ".."</param>
         /// <returns>A list of the items name</returns>
-        public List<string> GetDirectoryItems(string DirectoryFullName, bool ExcludeNavigationDots)
+        public List<string> GetDirectoryItems(string DirectoryFullName, bool ExcludeNavigationDots, NFSAttributes itemAttributes = null)
         {
             DirectoryFullName = CorrectPath(DirectoryFullName);
 
-            List<string> content = this._nfsInterface.GetItemList(DirectoryFullName);
+            List<string> content = this._nfsInterface.GetItemList(DirectoryFullName, itemAttributes);
 
             if (ExcludeNavigationDots)
             {

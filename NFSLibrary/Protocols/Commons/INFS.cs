@@ -17,7 +17,7 @@ namespace NFSLibrary.Protocols.Commons
 
         void UnMountDevice();
 
-        List<String> GetItemList(String DirectoryFullName);
+        List<String> GetItemList(String DirectoryFullName, NFSAttributes itemAttributes = null);
 
         NFSAttributes GetItemAttributes(String ItemFullName);
 
