@@ -212,7 +212,7 @@ namespace NFSLibrary.Protocols.V3
                 ItemFullName = ".";
 
             NFSHandle currentItem = _RootDirectoryHandleObject;
-            string[] PathTree = ItemFullName.Split('/');
+            string[] PathTree = ItemFullName.Split(@"\".ToCharArray());
 
             foreach (var pathPart in PathTree)
             {
