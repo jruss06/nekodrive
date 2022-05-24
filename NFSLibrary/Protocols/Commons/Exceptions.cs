@@ -22,7 +22,7 @@ namespace NFSLibrary.Protocols.Commons.Exceptions
             rDictionary.Add(NFSStats.NFSERR_NOENT, "No such file or directory. The file or directory name specified does not exist.");
             rDictionary.Add(NFSStats.NFSERR_IO, "I/O error. A hard error (for example, a disk error) occurred while processing the requested operation.");
             rDictionary.Add(NFSStats.NFSERR_NXIO, "I/O error. No such device or address");
-            rDictionary.Add(NFSStats.NFSERR_ACCES, "Permission denied. The caller does not have the correct permission to perform the requested operation. Contrast this with NFS3ERR_PERM, which restricts itself to owner or privileged user permission failures.");
+            rDictionary.Add(NFSStats.NFSERR_ACCES, "Permission denied.");
             rDictionary.Add(NFSStats.NFSERR_EXIST, "File exists. The file specified already exists.");
             rDictionary.Add(NFSStats.NFSERR_XDEV, "Attempt to do a cross-device hard link.");
             rDictionary.Add(NFSStats.NFSERR_NODEV, "No such device.");
@@ -51,7 +51,7 @@ namespace NFSLibrary.Protocols.Commons.Exceptions
             return rDictionary;
         }
 
-        public static void ThrowException(NFSStats ErrorCode)
+        public static void ThrowException(NFSStats ErrorCode, string proc = "")
         {
             if (ErrorCode != NFSStats.NFS_OK)
             {
@@ -60,12 +60,12 @@ namespace NFSLibrary.Protocols.Commons.Exceptions
 
                 if (exceptionMessages.ContainsKey(ErrorCode))
                 {
-                    String Message = exceptionMessages[ErrorCode];
+                    string Message = exceptionMessages[ErrorCode];
 
                     switch (ErrorCode)
                     {
                         case NFSStats.NFSERR_ACCES:
-                            throw new NFSAuthenticationException(Message);                      
+                            throw new NFSAuthenticationException(Message + " " + proc);                      
                         
                         case NFSStats.NFSERR_DQUOT:
                         case NFSStats.NFSERR_EXIST:

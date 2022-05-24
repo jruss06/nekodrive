@@ -188,7 +188,7 @@ namespace NFSLibrary.Protocols.V3
                         { throw new NFSGeneralException("NFSPROC3_READDIR: failure"); }
 
                         if (pReadDirRes.Status != NFSStats.NFS_OK)
-                        { ExceptionHelpers.ThrowException(pReadDirRes.Status); }
+                        { ExceptionHelpers.ThrowException(pReadDirRes.Status, "NFSPROC3_READDIR"); }
                     }
                 } while (pReadDirRes != null && !pReadDirRes.OK.Reply.EOF);
             }
@@ -226,7 +226,7 @@ namespace NFSLibrary.Protocols.V3
             }
             else
             {
-                ExceptionHelpers.ThrowException(pDirOpRes.Status);
+                ExceptionHelpers.ThrowException(pDirOpRes.Status, "NFSPROC3_LOOKUP");
             }
 
             return attributes;
